@@ -11,8 +11,8 @@ module.exports = class Settings extends React.PureComponent {
 
     _setState(update) {
         const state = {
-            isIdleValid: Number(this.props.getSetting('idle-duration', 60000)),
-            initialIdleValue: this.props.getSetting('idle-duration', 60000),
+            isIdleValid: Number(this.props.getSetting('idle-duration', 600000)),
+            initialIdleValue: this.props.getSetting('idle-duration', 600000),
             idleValue: this.props.getSetting('idle-duration')
         };
 
@@ -44,7 +44,7 @@ module.exports = class Settings extends React.PureComponent {
                 >Load Missing Plugins/Themes</SwitchItem>
                 <TextInput
                     value={this.state.isIdleValid ? getSetting("idle-duration") : this.state.idleValue}
-                    note="Choose the amount of time in seconds before discord automatically turns you IDLE. Default is 60000."
+                    note="Choose the amount of time in MILLISECONDS before discord automatically turns you IDLE. Default is 600000."
                     style={!this.state.isIdleValid ? { borderColor: 'red' } : {}}
                     onChange={(value) => {
                         if (Number(value)) {

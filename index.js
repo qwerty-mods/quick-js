@@ -45,7 +45,7 @@ module.exports = class QuickJS extends Plugin {
         webpack.constants.SLOWMODE_VALUES = [0, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600];
         powercord.api.commands.unregisterCommand("house");
         powercord.api.commands.unregisterCommand("load");
-        webpack.constants.IDLE_DURATION = 60000;
+        webpack.constants.IDLE_DURATION = 600000;
     }
 
     async quick_house([ id ]) {
