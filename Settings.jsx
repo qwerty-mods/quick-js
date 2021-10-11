@@ -24,21 +24,42 @@ module.exports = class Settings extends React.PureComponent {
     }
 
     render() {
-        const { getSetting, toggleSetting, updateSetting } = this.props;
+        const { getSetting, toggleSetting, updateSetting, house: HouseCMD, load: LoadCMD } = this.props;
         return (
             <div>
                 <SwitchItem
-                    onChange={(e) => toggleSetting('1s-sm')}
+                    onChange={(e) => {
+                        toggleSetting('1s-sm');
+                        if (getSetting('1s-sm', true)) {
+                            webpack.constants.SLOWMODE_VALUES = [0, 1, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600];
+                        } else {
+                            webpack.constants.SLOWMODE_VALUES = [0, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600];
+                        }
+                    }}
                     value={getSetting('1s-sm', true)}
                     note="Adds a 1s option to the slowmode slider."
                 >1s Slowmode Setting</SwitchItem>
                 <SwitchItem
-                    onChange={(e) => toggleSetting('quick-house')}
+                    onChange={(e) => {
+                        toggleSetting('quick-house');
+                        if (getSetting('quick-house', true)) {
+                            HouseCMD.register()
+                        } else {
+                            HouseCMD.unregister()
+                        }
+                    }}
                     value={getSetting('quick-house', true)}
                     note="A command that allows you to switch houses easily."
                 >Quick House Changer</SwitchItem>
                 <SwitchItem
-                    onChange={(e) => toggleSetting('load-missing')}
+                    onChange={(e) => {
+                        toggleSetting('load-missing');
+                        if (getSetting('load-missing', true)) {
+                            LoadCMD.register()
+                        } else {
+                            LoadCMD.unregister()
+                        }
+                    }}
                     value={getSetting('load-missing', true)}
                     note="A command that allows you to load any missing plugins/themes."
                 >Load Missing Plugins/Themes</SwitchItem>
