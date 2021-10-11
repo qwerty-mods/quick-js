@@ -1,6 +1,14 @@
-const { React } = require('powercord/webpack');
+const { React, getModule } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
 const { SwitchItem, TextInput } = require('powercord/components/settings')
+
+const { BOT_AVATARS } = getModule(["BOT_AVATARS"], false);
+
+const isValidUrl = function isValidUrl(string) {
+    let url;
+    try {url = new URL(string)} catch (_) {return false}
+    return url.protocol === "http:" || url.protocol === "https:";
+}
 
 module.exports = class Settings extends React.PureComponent {
     constructor(props) {
@@ -13,7 +21,10 @@ module.exports = class Settings extends React.PureComponent {
         const state = {
             isIdleValid: Number(this.props.getSetting('idle-duration', 600000)),
             initialIdleValue: this.props.getSetting('idle-duration', 600000),
-            idleValue: this.props.getSetting('idle-duration')
+            idleValue: this.props.getSetting('idle-duration', 600000),
+            clydeImg: this.props.getSetting('clyde-pfp', BOT_AVATARS.oldPowercord),
+            clydeImgValid: isValidUrl(this.props.getSetting('clyde-pfp', BOT_AVATARS.oldPowercord)),
+            initialclydeImg: this.props.getSetting('clyde-pfp', BOT_AVATARS.oldPowercord)
         };
 
         if (update) {
@@ -78,6 +89,21 @@ module.exports = class Settings extends React.PureComponent {
                         }
                     } }
                 >Auto-IDLE Time</TextInput>
+                <TextInput
+                    value={this.state.clydeImg ? getSetting("clyde-pfp", BOT_AVATARS.oldPowercord) : this.state.clydeImg}
+                    note="Change the pfp of Clyde. Make sure that eradicating Clyde is enabled in settings. Default is https://tinyurl.com/powercord-clyde"
+                    style={!this.state.clydeImgValid ? { borderColor: 'red' } : {}}
+                    onChange={(value) => {
+                        if (isValidUrl(value)) {
+                            this.setState({ clydeImgValid: true });
+                            updateSetting('clyde-pfp', value);
+                            BOT_AVATARS.powercord = value
+                        } else {
+                            this.setState({ clydeImgValid: false, clydeImg: value });
+                            updateSetting('clyde-pfp', this.state.initialclydeImg);
+                        }
+                    } }
+                >Force Change Clyde PFP</TextInput>
             </div>
         )
     }

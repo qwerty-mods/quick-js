@@ -22,3 +22,8 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 #### Idle Inactivity changer
 * Allows you to change the time it takes before discord puts you on Idle.
 * Credit: [Lustris](https://canary.discord.com/channels/538759280057122817/755005784999329883/789051359495323688)
+
+#### Force Change Clyde PFP
+* Allows you to change the pfp of clyde. Must eradicate Clyde in settings.
+* [Beautiful Icons](https://better-default-discord.netlify.app/) you can use. 
+* Credit: [Sxmurai](https://canary.discord.com/channels/538759280057122817/755005784999329883/757773506208464936)

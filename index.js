@@ -2,6 +2,8 @@ const { Plugin } = require('powercord/entities');
 const { getModule, React } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
 
+const { BOT_AVATARS } = getModule(["BOT_AVATARS"], false);
+
 const Settings = require('./Settings');
 const HouseCMD = new (require('./cmds/house'))();
 const LoadCMD = new (require('./cmds/load'))();
@@ -27,6 +29,9 @@ module.exports = class QuickJS extends Plugin {
         }
 
         webpack.constants.IDLE_DURATION = this.settings.get("idle-duration");
+
+        BOT_AVATARS.oldPowercord = BOT_AVATARS.powercord;
+        BOT_AVATARS.powercord = this.settings.get("clyde-pfp", BOT_AVATARS.oldPowercord);
     }
 
     pluginWillUnload() {
@@ -36,5 +41,6 @@ module.exports = class QuickJS extends Plugin {
         HouseCMD.unregister()
         LoadCMD.unregister()
         webpack.constants.IDLE_DURATION = 600000;
+        BOT_AVATARS.powercord = BOT_AVATARS.oldPowercord;
     }
 }
