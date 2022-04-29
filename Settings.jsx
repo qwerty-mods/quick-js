@@ -132,6 +132,30 @@ module.exports = class Settings extends React.PureComponent {
                         }
                     }}
                 >Force Change Clyde PFP</TextInput>
+                <TextInput
+                    placeholder={webpack.i18n.Messages.BOT_TAG_BOT}
+                    note="Change the text that will be inside of the BOT tag next to bots."
+                    onChange={(value) => {
+                        webpack.i18n.Messages.BOT_TAG_BOT = value;
+                    }}
+                >Change the <span class="botTag-2mryIa botTagRegular-kpctgU botTag-7aX5WZ px-MnE_OR"><span class="botText-1fD6Qk">BOT</span></span>&nbsp; tag text</TextInput>
+                <TextInput
+                    placeholder="Enter a user token"
+                    note="Login to a user account via token. Trying to use a bot token will essentially brick your Discord app."
+                    onChange={(value) => {
+                        if (!/(mfa\.[a-z0-9_-]{20,})|([a-z0-9_-]{23,28}\.[a-z0-9_-]{6,7}\.[a-z0-9_-]{27})/i.test(value)) {
+                            return powercord.api.notices.sendToast('pc-example-toast', {
+                                header: 'Invalid token!', // required
+                                content: 'You have entered an invalid token. Please try again with a proper token.',
+                                image: 'https://images-ext-1.discordapp.net/external/KP0pWLvSkgWYOnnTqDBMp0BD8yIQ7heV-BrIFapwK1k/http/cdn.spin.rip/r/discordError.png',
+                                imageClass: 'err-bad-token',
+                                type: 'error',
+                                timeout: 10e3
+                            });
+                        }
+                        webpackChunkdiscord_app.push([[Math.random()], {}, (r) => { Object.values(r.c).find(m => m.exports && m.exports.default && m.exports.default.login !== void 0).exports.default.loginToken(value) }]);
+                    }}
+                >Login via user token</TextInput>
             </div>
         )
     }
