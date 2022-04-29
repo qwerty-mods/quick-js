@@ -24,7 +24,7 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 * Credit: [Rasync](https://canary.discord.com/channels/538759280057122817/755005784999329883/871486072448774144)
 
 #### Give yourself every Discord badge
-* Allows you to mute or unmute all servers you are in.
+* Give yourself every Discord badge. This is client-side only.
 * Credit: [Puyodead1](https://canary.discord.com/channels/538759280057122817/755005784999329883/757130283735711754)
 
 #### Idle Inactivity changer
