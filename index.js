@@ -13,7 +13,7 @@ module.exports = class QuickJS extends Plugin {
         powercord.api.settings.registerSettings(this.entityID, {
             category: this.entityID,
             label: 'Quick JS',
-            render: (props) => React.createElement(Settings, {house: HouseCMD, load: LoadCMD, ...props})
+            render: (props) => React.createElement(Settings, { house: HouseCMD, load: LoadCMD, ...props })
         });
 
         if (this.settings.get("1s-sm", true)) {
@@ -21,11 +21,23 @@ module.exports = class QuickJS extends Plugin {
         }
 
         if (this.settings.get("quick-house", true)) {
-            HouseCMD.register()
+            HouseCMD.register();
         }
 
         if (this.settings.get("load-missing", true)) {
-            LoadCMD.register()
+            LoadCMD.register();
+        }
+
+        // if (this.settings.get("mute-all-guilds"), true) {
+        //     setTimeout(() => {
+        //         for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
+        //             webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: true });
+        //         }
+        //     }, 10000); // this makes a lot of requests, so we will load it after some time
+        // } // having this run every time the user reloads discord is probably a bad idea, as the user will be making 100+ requests (or less, depends on their server count) each time
+
+        if (this.settings.get("get-badges"), true) {
+            setTimeout(() => { Object.defineProperty(require('powercord/webpack').getModule(['getCurrentUser'], false).getCurrentUser(), 'flags', { get: () => -1 }); }, 8500); // not having timeout will not add badges
         }
 
         webpack.constants.IDLE_DURATION = this.settings.get("idle-duration");
@@ -42,5 +54,9 @@ module.exports = class QuickJS extends Plugin {
         LoadCMD.unregister()
         webpack.constants.IDLE_DURATION = 600000;
         BOT_AVATARS.powercord = BOT_AVATARS.oldPowercord;
+        // for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
+        //     webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
+        // }
+        Object.defineProperty(require('powercord/webpack').getModule(['getCurrentUser'], false).getCurrentUser(), 'flags', { get: () => null });
     }
 }

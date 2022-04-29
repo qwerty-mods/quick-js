@@ -1,19 +1,19 @@
 const { React, getModule } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
-const { SwitchItem, TextInput } = require('powercord/components/settings')
+const { SwitchItem, TextInput } = require('powercord/components/settings');
 
 const { BOT_AVATARS } = getModule(["BOT_AVATARS"], false);
 
 const isValidUrl = function isValidUrl(string) {
     let url;
-    try {url = new URL(string)} catch (_) {return false}
+    try { url = new URL(string) } catch (_) { return false }
     return url.protocol === "http:" || url.protocol === "https:";
 }
 
 module.exports = class Settings extends React.PureComponent {
     constructor(props) {
         super(props);
-        
+
         this._setState(false);
     }
 
@@ -74,6 +74,34 @@ module.exports = class Settings extends React.PureComponent {
                     value={getSetting('load-missing', true)}
                     note="A command that allows you to load any missing plugins/themes."
                 >Load Missing Plugins/Themes</SwitchItem>
+                <SwitchItem
+                    onChange={(e) => {
+                        toggleSetting('mute-all-guilds');
+                        if (getSetting('mute-all-guilds', true)) {
+                            for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: true });
+                            }
+                        } else {
+                            for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
+                            }
+                        }
+                    }}
+                    value={getSetting('mute-all-guilds', true)}
+                    note="Mute or unmute every server you are currently in. It is recommended that you do not click this too many times in a short time frame."
+                >Toggle mute for all servers you're in</SwitchItem>
+                <SwitchItem
+                    onChange={(e) => {
+                        toggleSetting('get-badges');
+                        if (getSetting('get-badges', true)) {
+                            Object.defineProperty(require('powercord/webpack').getModule(['getCurrentUser'], false).getCurrentUser(), 'flags', { get: () => 219087 });
+                        } else {
+                            Object.defineProperty(require('powercord/webpack').getModule(['getCurrentUser'], false).getCurrentUser(), 'flags', { get: () => null });
+                        }
+                    }}
+                    value={getSetting('get-badges', true)}
+                    note="Give yourself every Discord badge. This is client-side only, meaning no one else can see them."
+                >Toggle all badges</SwitchItem>
                 <TextInput
                     value={this.state.isIdleValid ? getSetting("idle-duration") : this.state.idleValue}
                     note="Choose the amount of time in MILLISECONDS before discord automatically turns you IDLE. Default is 600000."
@@ -87,7 +115,7 @@ module.exports = class Settings extends React.PureComponent {
                             this.setState({ isIdleValid: false, idleValue: value });
                             updateSetting('idle-duration', this.state.initialIdleValue);
                         }
-                    } }
+                    }}
                 >Auto-IDLE Time</TextInput>
                 <TextInput
                     value={this.state.clydeImg ? getSetting("clyde-pfp", BOT_AVATARS.oldPowercord) : this.state.clydeImg}
@@ -102,7 +130,7 @@ module.exports = class Settings extends React.PureComponent {
                             this.setState({ clydeImgValid: false, clydeImg: value });
                             updateSetting('clyde-pfp', this.state.initialclydeImg);
                         }
-                    } }
+                    }}
                 >Force Change Clyde PFP</TextInput>
             </div>
         )

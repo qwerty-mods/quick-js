@@ -16,7 +16,7 @@ module.exports = class HouseCMD {
     }
 
     house([ id ]) {
-        let house = id == "Bravery" ? "1" : id == "Brilliance" ? "2" : id == Balance ? "3" : null;
+        let house = id == "Bravery" ? "1" : id == "Brilliance" ? "2" : id == "Balance" ? "3" : null;
         if (house) {
             getModule(['joinHypeSquadOnline'], false).joinHypeSquadOnline({ houseID: `HOUSE_${house}` })
         }
