@@ -61,6 +61,7 @@ module.exports = class QuickJS extends Plugin {
         // for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
         //     webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
         // }
+        webpack.i18n.Messages.BOT_TAG_BOT = "BOT";
         Object.defineProperty(require('powercord/webpack').getModule(['getCurrentUser'], false).getCurrentUser(), 'flags', { get: () => null });
     }
 }
