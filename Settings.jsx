@@ -137,6 +137,7 @@ module.exports = class Settings extends React.PureComponent {
                     note="Change the text that will be inside of the BOT tag next to bots."
                     onChange={(value) => {
                         webpack.i18n.Messages.BOT_TAG_BOT = value;
+                        localStorage.setItem("quick-js-bot-tag", value);
                     }}
                 >Change the <span class="botTag-2mryIa botTagRegular-kpctgU botTag-7aX5WZ px-MnE_OR"><span class="botText-1fD6Qk">BOT</span></span>&nbsp; tag text</TextInput>
             </div>

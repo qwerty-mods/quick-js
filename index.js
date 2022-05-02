@@ -28,6 +28,10 @@ module.exports = class QuickJS extends Plugin {
             LoadCMD.register();
         }
 
+        if (this.settings.get("quick-js-bot-tag", true)) {
+            webpack.i18n.Messages.BOT_TAG_BOT = localStorage.getItem("quick-js-bot-tag") ? localStorage.getItem("quick-js-bot-tag") : "BOT";
+        }
+
         // if (this.settings.get("mute-all-guilds"), true) {
         //     setTimeout(() => {
         //         for (let id in webpack.getModule(['getGuild'], false).getGuilds()) {
