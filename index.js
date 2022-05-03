@@ -2,6 +2,8 @@ const { Plugin } = require('powercord/entities');
 const { getModule, React } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
 
+const { getCurrentUser } = getModule([ 'getCurrentUser' ], false);
+
 const { BOT_AVATARS } = getModule([ 'BOT_AVATARS' ], false);
 
 const Settings = require('./Settings');
@@ -34,9 +36,9 @@ module.exports = class QuickJS extends Plugin {
       webpack.i18n.Messages.BOT_TAG_BOT = localStorage.getItem('quick-js-bot-tag') ? localStorage.getItem('quick-js-bot-tag') : 'BOT';
     }
 
-    if (this.settings.get('get-badges', true)) {
+    if (this.settings.get('get-badges', false)) {
       setTimeout(() => {
-        Object.defineProperty(require('powercord/webpack').getModule([ 'getCurrentUser' ], false).getCurrentUser(), 'flags', { get: () => -1 });
+        Object.defineProperty(getCurrentUser(), 'flags', { get: () => 219087 });
       }, 8500); // not having timeout will not add badges
     }
 
@@ -55,6 +57,6 @@ module.exports = class QuickJS extends Plugin {
     webpack.constants.IDLE_DURATION = 600000;
     BOT_AVATARS.powercord = BOT_AVATARS.oldPowercord;
     webpack.i18n.Messages.BOT_TAG_BOT = 'BOT';
-    Object.defineProperty(require('powercord/webpack').getModule([ 'getCurrentUser' ], false).getCurrentUser(), 'flags', { get: () => null });
+    Object.defineProperty(getCurrentUser(), 'flags', { get: () => null });
   }
 };

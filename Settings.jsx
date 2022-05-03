@@ -99,13 +99,13 @@ module.exports = class Settings extends React.PureComponent {
         <SwitchItem
           onChange={() => {
             toggleSetting('get-badges');
-            if (getSetting('get-badges', true)) {
+            if (getSetting('get-badges', false)) {
               Object.defineProperty(getCurrentUser(), 'flags', { get: () => 219087 });
             } else {
               Object.defineProperty(getCurrentUser(), 'flags', { get: () => null });
             }
           }}
-          value={getSetting('get-badges', true)}
+          value={getSetting('get-badges', false)}
           note="Give yourself every Discord badge. This is client-side only, meaning no one else can see them."
         >Toggle all badges</SwitchItem>
         <TextInput
