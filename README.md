@@ -19,6 +19,14 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 * A command that loads any missing plugins/themes
 * Credit: [Powercord](https://github.com/powercord-org/powercord/blob/737d09139c06b1b48450a6c8086f101ecfd5d780/src/Powercord/plugins/pc-moduleManager/index.js#L136-L170)
 
+#### Toggle mute for all servers you are in
+* Allows you to mute or unmute all servers you are in.
+* Credit: [Rasync](https://canary.discord.com/channels/538759280057122817/755005784999329883/871486072448774144)
+
+#### Give yourself every Discord badge
+* Give yourself every Discord badge. This is client-side only.
+* Credit: [Puyodead1](https://canary.discord.com/channels/538759280057122817/755005784999329883/757130283735711754)
+
 #### Idle Inactivity changer
 * Allows you to change the time it takes before discord puts you on Idle.
 * Credit: [Lustris](https://canary.discord.com/channels/538759280057122817/755005784999329883/789051359495323688)
@@ -26,4 +34,8 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 #### Force Change Clyde PFP
 * Allows you to change the pfp of clyde. Must eradicate Clyde in settings.
 * [Beautiful Icons](https://better-default-discord.netlify.app/) you can use. 
-* Credit: [Sxmurai](https://canary.discord.com/channels/538759280057122817/755005784999329883/757773506208464936)
+* Credit: [Cynthia](https://canary.discord.com/channels/538759280057122817/755005784999329883/757773506208464936)
+
+#### Login to user account via token
+* Lets you login to a user account using its token. Do not use bot tokens, you will brick your Discord app.
+* Credit: [Sxmurai](https://canary.discord.com/channels/538759280057122817/755005784999329883/901431818228731946)

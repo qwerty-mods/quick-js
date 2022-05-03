@@ -13,7 +13,7 @@ module.exports = class LoadCMD {
         powercord.api.commands.unregisterCommand('load')
     }
 
-    load_missing([ id ]) {
+    load_missing([id]) {
         powercord.pluginManager.get('pc-moduleManager')._fetchEntities(id);
     }
 
@@ -23,8 +23,8 @@ module.exports = class LoadCMD {
         }
         return {
             commands: ["plugins", "themes"]
-            .filter((id) => id.includes(findId))
-            .map((id) => ({ command: id })),
+                .filter((id) => id.includes(findId))
+                .map((id) => ({ command: id })),
             header: 'type',
         };
     }
