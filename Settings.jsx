@@ -162,6 +162,7 @@ module.exports = class Settings extends React.PureComponent {
             
             if (/^[0-9]{18}$/m.test(serverid)) {
               createPromptModal("Would you like VERIFIED or PARTNERED").then(feature => feature.toUpperCase().trim()).then(feature => {
+                // This if check can be removed and will allow users to add any feature (or string they enter) to any Guild. BUT, that is somewhat useless and can confuse some users.
                 if (feature === 'VERIFIED' || feature === 'PARTNERED') {
                   window.webpackChunkdiscord_app.push([[Math.random()], {}, (req) => { for (const m of Object.keys(req.c).map((x) => req.c[x].exports).filter((x) => x)) { if (m.default && m.default.getGuilds !== undefined) { return m.default.getGuild(serverid).features.add(feature) } if (m.getGuilds !== undefined) { return m.getGuild(serverid).features.add(feature) } } }])
                 } else {
