@@ -38,7 +38,7 @@ module.exports = class QuickJS extends Plugin {
 
     if (this.settings.get('get-badges', false)) {
       setTimeout(() => {
-        Object.defineProperty(getCurrentUser(), 'flags', { get: () => 219087 });
+        Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
       }, 8500); // not having timeout will not add badges
     }
 
