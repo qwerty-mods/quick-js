@@ -36,6 +36,10 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 * [Beautiful Icons](https://better-default-discord.netlify.app/) you can use. 
 * Credit: [Cynthia](https://canary.discord.com/channels/538759280057122817/755005784999329883/757773506208464936)
 
-#### Login to user account via token
-* Lets you login to a user account using its token. Do not use bot tokens, you will brick your Discord app.
-* Credit: [Sxmurai](https://canary.discord.com/channels/538759280057122817/755005784999329883/901431818228731946)
+#### Modify BOT tags
+* Lets you change all BOT tags to any text that you want, and will stay even after a client reload.
+* Credit: [Antonio32A](https://canary.discord.com/channels/538759280057122817/755005784999329883/758770721009827860)
+
+#### Modify Guild features
+* Allows you to add or remove the VERIFIED/PARTNERED status to/from any Guild. Client-side only, no one else will see the change and the Guild will **not** receive benefits.
+* Credit: Original Author Unknown

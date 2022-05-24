@@ -2,11 +2,13 @@ const { React, getModule } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
 const { SwitchItem, TextInput } = require('powercord/components/settings');
 
-const { getCurrentUser } = getModule([ 'getCurrentUser' ], false);
+const { createAlertModal, createPromptModal } = require('./modals.js');
 
-const { BOT_AVATARS } = getModule([ 'BOT_AVATARS' ], false);
+const { getCurrentUser } = getModule(['getCurrentUser'], false);
 
-const isValidUrl = function isValidUrl (string) {
+const { BOT_AVATARS } = getModule(['BOT_AVATARS'], false);
+
+const isValidUrl = function isValidUrl(string) {
   let url;
   try {
     url = new URL(string);
@@ -17,13 +19,13 @@ const isValidUrl = function isValidUrl (string) {
 };
 
 module.exports = class Settings extends React.PureComponent {
-  constructor (props) {
+  constructor(props) {
     super(props);
 
     this._setState(false);
   }
 
-  _setState (update) {
+  _setState(update) {
     const state = {
       isIdleValid: Number(this.props.getSetting('idle-duration', 600000)),
       initialIdleValue: this.props.getSetting('idle-duration', 600000),
@@ -40,7 +42,7 @@ module.exports = class Settings extends React.PureComponent {
     }
   }
 
-  render () {
+  render() {
     const { getSetting, toggleSetting, updateSetting, house: HouseCMD, load: LoadCMD } = this.props;
     return (
       <div>
@@ -48,9 +50,9 @@ module.exports = class Settings extends React.PureComponent {
           onChange={() => {
             toggleSetting('1s-sm');
             if (getSetting('1s-sm', true)) {
-              webpack.constants.SLOWMODE_VALUES = [ 0, 1, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600 ];
+              webpack.constants.SLOWMODE_VALUES = [0, 1, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600];
             } else {
-              webpack.constants.SLOWMODE_VALUES = [ 0, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600 ];
+              webpack.constants.SLOWMODE_VALUES = [0, 5, 10, 15, 30, 60, 120, 300, 600, 900, 1800, 3600, 7200, 21600];
             }
           }}
           value={getSetting('1s-sm', true)}
@@ -84,12 +86,12 @@ module.exports = class Settings extends React.PureComponent {
           onChange={() => {
             toggleSetting('mute-all-guilds');
             if (getSetting('mute-all-guilds', true)) {
-              for (const id in webpack.getModule([ 'getGuild' ], false).getGuilds()) {
-                webpack.getModule([ 'updateGuildNotificationSettings' ], false).updateGuildNotificationSettings(id, { muted: true });
+              for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: true });
               }
             } else {
-              for (const id in webpack.getModule([ 'getGuild' ], false).getGuilds()) {
-                webpack.getModule([ 'updateGuildNotificationSettings' ], false).updateGuildNotificationSettings(id, { muted: false });
+              for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
               }
             }
           }}
@@ -100,7 +102,7 @@ module.exports = class Settings extends React.PureComponent {
           onChange={() => {
             toggleSetting('get-badges');
             if (getSetting('get-badges', false)) {
-              Object.defineProperty(getCurrentUser(), 'flags', { get: () => 219087 });
+              Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
             } else {
               Object.defineProperty(getCurrentUser(), 'flags', { get: () => null });
             }
@@ -118,8 +120,10 @@ module.exports = class Settings extends React.PureComponent {
               updateSetting('idle-duration', value);
               webpack.constants.IDLE_DURATION = parseInt(value);
             } else {
-              this.setState({ isIdleValid: false,
-                idleValue: value });
+              this.setState({
+                isIdleValid: false,
+                idleValue: value
+              });
               updateSetting('idle-duration', this.state.initialIdleValue);
             }
           }}
@@ -134,8 +138,10 @@ module.exports = class Settings extends React.PureComponent {
               updateSetting('clyde-pfp', value);
               BOT_AVATARS.powercord = value;
             } else {
-              this.setState({ clydeImgValid: false,
-                clydeImg: value });
+              this.setState({
+                clydeImgValid: false,
+                clydeImg: value
+              });
               updateSetting('clyde-pfp', this.state.initialclydeImg);
             }
           }}
@@ -148,6 +154,33 @@ module.exports = class Settings extends React.PureComponent {
             localStorage.setItem('quick-js-bot-tag', value);
           }}
         >Change the <span class="botTag-2mryIa botTagRegular-kpctgU botTag-7aX5WZ px-MnE_OR"><span class="botText-1fD6Qk">BOT</span></span>&nbsp; tag text</TextInput>
+        <TextInput
+          placeholder="Insert a Guild ID"
+          note="Add or modify Guild features."
+          onChange={(serverid) => {
+            serverid = serverid.trim();
+
+            if (/^[0-9]{18}$/m.test(serverid)) {
+              createPromptModal("Enter the Guild feature that you would like to add").then(feature => feature.toUpperCase().trim()).then(feature => {
+                // This if statement check can be uncommented and it will only allow VERIFIED or PARTNERED.
+                // if (feature === 'VERIFIED' || feature === 'PARTNERED') {
+                  window.webpackChunkdiscord_app.push([[Math.random()], {}, (req) => { for (const m of Object.keys(req.c).map((x) => req.c[x].exports).filter((x) => x)) { if (m.default && m.default.getGuilds !== undefined) { return m.default.getGuild(serverid).features.add(feature) } if (m.getGuilds !== undefined) { return m.getGuild(serverid).features.add(feature) } } }])
+                // } else {
+                  // createAlertModal("Error!", "Invalid feature type.");
+                // }
+              });
+            } else {
+              powercord.api.notices.sendToast('invalid-guild-id', {
+                header: 'Invalid Guild ID', // required
+                content: 'The ID you have provided is invalid.',
+                image: 'https://cdn.spin.rip/r/errorIcon.png',
+                imageClass: 'err-bad-id',
+                type: 'error',
+                timeout: 10e3
+              });
+            }
+          }}
+        >Allows you to add features to a Guild. You can find an <b>incomplete</b> list here: <a class="anchor-1MIwyf anchorUnderlineOnHover-2qPutX cta" href="https://gist.github.com/Techy/ecc60b12e94f8fc8185f09b82aa91dd2" rel="noreferrer noopener" target="_blank" role="button" tabindex="0">https://gist.github.com/Techy/ecc60b12e94f8fc8185f09b82aa91dd2</a></TextInput>
       </div>
     );
   }
