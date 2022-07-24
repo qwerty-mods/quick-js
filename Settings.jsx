@@ -110,6 +110,11 @@ module.exports = class Settings extends React.PureComponent {
           value={getSetting('get-badges', false)}
           note="Give yourself every Discord badge. This is client-side only, meaning no one else can see them."
         >Toggle all badges</SwitchItem>
+        <SwitchItem
+          onChange={() => toggleSetting('remove-gif')}
+          value={getSetting('remove-gif', false)}
+          note="Remove the GIF button from channels that you don't have embed perms on."
+        >Remove GIF Buttons</SwitchItem>
         <TextInput
           value={this.state.isIdleValid ? getSetting('idle-duration') : this.state.idleValue}
           note="Choose the amount of time in MILLISECONDS before discord automatically turns you IDLE. Default is 600000."

@@ -1,10 +1,14 @@
 const { Plugin } = require('powercord/entities');
-const { getModule, React } = require('powercord/webpack');
+const { getModule, React, FluxDispatcher } = require('powercord/webpack');
 const webpack = require('powercord/webpack');
 
 const { getCurrentUser } = getModule([ 'getCurrentUser' ], false);
 
 const { BOT_AVATARS } = getModule([ 'BOT_AVATARS' ], false);
+
+const { can } = getModule(['getChannelPermissions'], false);
+const { Permissions } = getModule(['API_HOST'], false);
+const { getChannel } = getModule(['getChannel', 'getDMFromUserId'], false);
 
 const Settings = require('./Settings');
 const HouseCMD = new (require('./cmds/house'))();
@@ -46,6 +50,15 @@ module.exports = class QuickJS extends Plugin {
 
     BOT_AVATARS.oldPowercord = BOT_AVATARS.powercord;
     BOT_AVATARS.powercord = this.settings.get('clyde-pfp', BOT_AVATARS.oldPowercord);
+
+    FluxDispatcher.subscribe('CHANNEL_SELECT', this.removeGifIfNoEmbed = ({ channelId }) => {
+      if (!this.settings.get('remove-gif', false)) return;
+      const canEmbedLinks = can(Permissions.EMBED_LINKS, getChannel(channelId));
+
+      if (!canEmbedLinks) {
+          document.getElementsByClassName('expression-picker-chat-input-button')[0].style.display = 'none';
+      }
+    });
   }
 
   pluginWillUnload () {
@@ -58,5 +71,6 @@ module.exports = class QuickJS extends Plugin {
     BOT_AVATARS.powercord = BOT_AVATARS.oldPowercord;
     webpack.i18n.Messages.BOT_TAG_BOT = 'BOT';
     Object.defineProperty(getCurrentUser(), 'flags', { get: () => null });
+    FluxDispatcher.unsubscribe('CHANNEL_SELECT', this.removeGifIfNoEmbed);
   }
 };

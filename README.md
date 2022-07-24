@@ -43,3 +43,7 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 #### Modify Guild features
 * Allows you to add or remove the VERIFIED/PARTNERED status to/from any Guild. Client-side only, no one else will see the change and the Guild will **not** receive benefits.
 * Credit: Original Author Unknown
+
+#### Remove GIF Button
+* Removes the GIF button from chat areas if you don't have embed link perms. The /gif type of commands discord has still exists.
+* Credit: [botato](https://canary.discord.com/channels/538759280057122817/755005784999329883/1000551401581203467)
