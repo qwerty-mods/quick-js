@@ -100,16 +100,22 @@ module.exports = class Settings extends React.PureComponent {
         >Toggle mute for all servers you're in</SwitchItem>
         <SwitchItem
           onChange={() => {
-            toggleSetting('get-badges');
-            if (getSetting('get-badges', false)) {
-              Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
+            toggleSetting('get-flags');
+            if (getSetting('get-flags', false)) {
+              createAlertModal("Enable all flags?", "Enabling all flags may cause some features to break, and this plugin is not responsible for any crashes or errors that arise from toggling this feature. Continue?").then(res => {
+                if (res) {
+                  Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
+                } else {
+                  toggleSetting('get-flags');
+                }
+              })
             } else {
               Object.defineProperty(getCurrentUser(), 'flags', { get: () => null });
             }
           }}
-          value={getSetting('get-badges', false)}
-          note="Give yourself every Discord badge. This is client-side only, meaning no one else can see them."
-        >Toggle all badges</SwitchItem>
+          value={getSetting('get-flags', false)}
+          note="Give yourself every Discord flag, which can also give you every available badge. This is client-side only and may cause issues with some features."
+        >Toggle all flags</SwitchItem>
         <SwitchItem
           onChange={() => toggleSetting('remove-gif')}
           value={getSetting('remove-gif', false)}

@@ -40,10 +40,10 @@ module.exports = class QuickJS extends Plugin {
       webpack.i18n.Messages.BOT_TAG_BOT = localStorage.getItem('quick-js-bot-tag') ? localStorage.getItem('quick-js-bot-tag') : 'BOT';
     }
 
-    if (this.settings.get('get-badges', false)) {
+    if (this.settings.get('get-flags', false)) {
       setTimeout(() => {
         Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
-      }, 8500); // not having timeout will not add badges
+      }, 8500); // not having timeout will not add flags
     }
 
     webpack.constants.IDLE_DURATION = this.settings.get('idle-duration');
