@@ -83,17 +83,26 @@ module.exports = class Settings extends React.PureComponent {
           note="A command that allows you to load any missing plugins/themes."
         >Load Missing Plugins/Themes</SwitchItem>
         <SwitchItem
-          onChange={() => {
-            toggleSetting('mute-all-guilds');
-            if (getSetting('mute-all-guilds', true)) {
-              for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
-                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: true });
+          onChange={async() => {
+            const { getGuilds } = await getModule(['getGuilds']);
+            const guildCount = await Object.keys(getGuilds()).length
+            createAlertModal("Toggle mute for all servers you're in?", `${guildCount >= 35 ? `You are currently in **${guildCount}** servers, your client may temporarily slow down or freeze due to the amount of requests that are made. ` : ""}Toggling this too quickly in a short amount of time may cause issues that this plugin will not be responsible for. Continue?`).then(res => {
+              if (res) {
+                toggleSetting('mute-all-guilds');
+                if (getSetting('mute-all-guilds', true)) {
+                  for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                    webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: true });
+                  }
+                } else {
+                  for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
+                    webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
+                  }
+                }
+                Object.defineProperty(getCurrentUser(), 'flags', { get: () => -1 });
+              } else {
+                console.log("Mute toggle aborted!");
               }
-            } else {
-              for (const id in webpack.getModule(['getGuild'], false).getGuilds()) {
-                webpack.getModule(['updateGuildNotificationSettings'], false).updateGuildNotificationSettings(id, { muted: false });
-              }
-            }
+            })
           }}
           value={getSetting('mute-all-guilds', true)}
           note="Mute or unmute every server you are currently in. It is recommended that you do not click this too many times in a short time frame."
