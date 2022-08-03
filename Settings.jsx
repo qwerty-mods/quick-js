@@ -142,7 +142,7 @@ module.exports = class Settings extends React.PureComponent {
           }}
         >Force Change Clyde PFP</TextInput>
         <TextInput
-          placeholder={webpack.i18n.Messages.BOT_TAG_BOT}
+          placeholder={webpack.i18n.Messages.BOT_TAG_BOT.toUpperCase()}
           note="Change the text that will be inside of the BOT tag next to bots."
           onChange={(value) => {
             webpack.i18n.Messages.BOT_TAG_BOT = value;
