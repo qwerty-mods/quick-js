@@ -175,7 +175,7 @@ module.exports = class Settings extends React.PureComponent {
               });
             }
           }}
-        >Allows you to add features to a Guild. You can find a list here: <a class="anchor-1MIwyf anchorUnderlineOnHover-2qPutX cta" href="https://discord.com/developers/docs/resources/guild#guild-object-guild-features" rel="noreferrer noopener" target="_blank" role="button" tabindex="0">https://discord.com/developers/docs/resources/guild#guild-object-guild-features</a></TextInput>
+        >Allows you to add features to a Guild. You can find a list here: <a class="anchor-1MIwyf anchorUnderlineOnHover-2qPutX cta" href="https://github.com/Delitefully/DiscordLists#guild-feature-glossary" rel="noreferrer noopener" target="_blank" role="button" tabindex="0">https://github.com/Delitefully/DiscordLists#guild-feature-glossary</a></TextInput>
       </div>
     );
   }
