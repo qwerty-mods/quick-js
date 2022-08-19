@@ -14,7 +14,7 @@ module.exports = class LoadCMD {
   }
 
   load_missing ([ id ]) {
-    powercord.pluginManager.get('pc-moduleManager')._fetchEntities(id);
+    powercord.api.moduleManager._fetchEntities(id);
   }
 
   autocomplete ([ findId, ...args ]) {
