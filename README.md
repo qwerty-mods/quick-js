@@ -19,12 +19,8 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 * A command that loads any missing plugins/themes
 * Credit: [Powercord](https://github.com/powercord-org/powercord/blob/737d09139c06b1b48450a6c8086f101ecfd5d780/src/Powercord/plugins/pc-moduleManager/index.js#L136-L170)
 
-#### Toggle mute for all servers you are in
-* Allows you to mute or unmute all servers you are in.
-* Credit: [Rasync](https://canary.discord.com/channels/538759280057122817/755005784999329883/871486072448774144)
-
-#### Give yourself every Discord badge
-* Give yourself every Discord badge. This is client-side only.
+#### Give yourself every Discord flag
+* Give yourself every Discord flag, which can also give you every available badge. This is client-side only and may cause issues with some features.
 * Credit: [Puyodead1](https://canary.discord.com/channels/538759280057122817/755005784999329883/757130283735711754)
 
 #### Idle Inactivity changer
@@ -41,7 +37,7 @@ A powercord plugin that compiles different snippets that don't have to be solo p
 * Credit: [Antonio32A](https://canary.discord.com/channels/538759280057122817/755005784999329883/758770721009827860)
 
 #### Modify Guild features
-* Allows you to add or remove the VERIFIED/PARTNERED status to/from any Guild. Client-side only, no one else will see the change and the Guild will **not** receive benefits.
+* Allows you to add or remove Guild features such as VERIFIED and PARTNERED. Client-side only; no one else will see the change and the Guild will **not** actually receive benefits (locked behind Discord's API).
 * Credit: Original Author Unknown
 
 #### Remove GIF Button
